@@ -10,31 +10,41 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView rvBeverages;
-    private RecyclerView rvFruits;
-    private ImageAdapter imageAdapterFruits;
-    private ImageAdapter imageAdapterBeverages;
+    private RecyclerView rvLeft;
+    private RecyclerView rvRight;
+    private ImageAdapter imageAdapterTwo;
+    private ImageAdapter imageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        rvBeverages = (RecyclerView) findViewById(R.id.rv_beverage);
+
+        // Set up the beverages.
+        rvLeft = (RecyclerView) findViewById(R.id.rv_left);
         List<ImageItem> imageItems = new ArrayList<ImageItem>();
         fill(imageItems);
-        imageAdapterBeverages = new ImageAdapter(imageItems);
-        rvBeverages.setAdapter(imageAdapterBeverages);
-        /*
-        imageAdapterFruits = new ImageAdapter(imageItems);
-        rvFruits = (RecyclerView) findViewById(R.id.rv_fruit);
-        rvFruits.setAdapter(imageAdapterFruits);
-         */
+        imageAdapter = new ImageAdapter(imageItems);
+        rvLeft.setAdapter(imageAdapter);
+
+        // Set up the fruits.
+        List<ImageItem> imageItemsTwo = new ArrayList<ImageItem>();
+        fillTwo(imageItemsTwo);
+        imageAdapterTwo = new ImageAdapter(imageItemsTwo);
+        rvRight = (RecyclerView) findViewById(R.id.rv_right);
+        rvRight.setAdapter(imageAdapterTwo);
     }
 
     private void fill(List<ImageItem> imageItems) {
         imageItems.add(createItem(R.drawable.ic_baseline_ac_unit_24));
         imageItems.add(createItem(R.drawable.ic_baseline_accessibility_24));
         imageItems.add(createItem(R.drawable.ic_baseline_restaurant_menu_24));
+    }
+
+    private void fillTwo(List<ImageItem> imageItems) {
+        imageItems.add(createItem(R.drawable.ic_baseline_single_bed_24));
+        imageItems.add(createItem(R.drawable.ic_baseline_work_24));
+        imageItems.add(createItem(R.drawable.ic_baseline_create_24));
     }
 
     private ImageItem createItem(int resourceId) {
