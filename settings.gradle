@@ -1,0 +1,2 @@
+rootProject.name = "MultiSlots"
+include ':app'
