@@ -45,20 +45,26 @@ public class ImageAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull @org.jetbrains.annotations.NotNull RecyclerView.ViewHolder rvHolder, int position) {
         ImageViewHolder ivHolder = (ImageViewHolder) rvHolder;
-        if (position > imageItems.size()) {
-            ImageItem imageItem = imageItems.get(position);
-            ivHolder.ivItem.setImageDrawable(imageItem.getDrawable());
-        } else {
-            ImageItem imageItem = imageItems.get(position);
-            ivHolder.ivItem.setImageDrawable(imageItem.getDrawable());
-        }
+        // Compute a position that is limited between 0 and imageItems.size()
+        int restrictedPosition = position % imageItems.size();
+        Log.d(TAG, "restrictedPosition " + restrictedPosition);
+        ImageItem imageItem = imageItems.get(restrictedPosition);
+        ivHolder.ivItem.setImageDrawable(imageItem.getDrawable());
         ivHolder.ivItem.getLayoutParams().height = 400;
         ivHolder.ivItem.getLayoutParams().width = 400;
     }
 
+    /**
+     * Make this RecyclerView infinitely loop...
+     * https://stackoverflow.com/questions/31253555/how-do-i-create-a-circular-endless-recyclerview
+     * The only problem I see here is if the user is so patient that they keep scrolling up
+     * to MAX_VALUE. In which case... hm!
+     *
+     * @return Integer.MAX_VALUE in order to simulate an infinitely looping scrolling view.
+     */
     @Override
     public int getItemCount() {
-        return imageItems.size();
+        return Integer.MAX_VALUE;
     }
 
 }
